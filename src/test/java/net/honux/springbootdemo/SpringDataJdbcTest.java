@@ -60,4 +60,25 @@ class SpringDataJdbcTest {
         logger.debug("Find user with Id 1: {}", user);
 
     }
+
+    @Test
+    void userRepo_addGame() {
+        User user = userRepo.findById(1L).get();
+        user.addGame(new Game("FF6"));
+        user.addGame(new Game("DQ5"));
+        userRepo.save(user);
+        logger.debug("After add games: {}", user);
+        for(Game g: user.getGames()) {
+            logger.debug("Game: {}", g);
+        }
+
+        assertThat(userRepo.gameCount(user.getId())).isEqualTo(2);
+        logger.debug("Game count: {}", userRepo.gameCount(user.getId()));
+
+        user.removeAllGame();
+        userRepo.save(user);
+        assertThat(userRepo.gameCount(user.getId())).isEqualTo(0);
+        logger.debug("Game count after erase: {}", userRepo.gameCount(user.getId()));
+    }
+
 }

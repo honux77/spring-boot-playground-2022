@@ -11,4 +11,8 @@ public interface UserRepository extends CrudRepository<User, Long> {
             + " from user u left join github g on u.id = g.user"
             + " where u.email = :email")
     Optional<User> findUserByEmail(String email);
+
+    @Query("Select count(*) from game where user= :userId")
+    int gameCount(Long userId);
+
 }

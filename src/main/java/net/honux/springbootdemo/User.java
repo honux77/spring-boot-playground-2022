@@ -3,6 +3,8 @@ package net.honux.springbootdemo;
 import org.springframework.data.annotation.Id;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class User {
 
@@ -10,6 +12,7 @@ public class User {
     private Long id;
     private String email;
     private LocalDateTime createdDate = LocalDateTime.now();
+    private List<Game> games = new ArrayList<>();
 
     private Github github;
 
@@ -46,5 +49,17 @@ public class User {
 
     public void setGithub(Github github) {
         this.github = github;
+    }
+
+    public void addGame(Game game) {
+        this.games.add(game);
+    }
+
+    public void removeAllGame() {
+        this.games.clear();
+    }
+
+    public List<Game> getGames() {
+        return this.games;
     }
 }
