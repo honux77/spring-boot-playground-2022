@@ -31,19 +31,4 @@ class SpringBootDemoApplicationTests {
 		assertThat(logger).isNotNull();
 		logger.debug("Logger OK");
 	}
-
-	@Test
-	void userRepo_FindById() {
-		User user = userRepo.findById(1L).get();
-		assertThat(user).isNotNull();
-		logger.debug("Find user with Id 1: {}", user);
-	}
-
-	@Test
-	void userRepo_FindByEmail() {
-		String email = "honux@gmail.com"; //data.sql
-		User user = userRepo.findUserByEmail(email).get();
-		assertThat(user).isNotNull();
-		logger.debug("Find user by Email {}: {}", email, user);
-	}
 }
