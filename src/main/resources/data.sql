@@ -1,1 +1,1 @@
-INSERT INTO user (email, created_date) VALUES ('honux@gmail.com', CURRENT_TIMESTAMP());
+INSERT INTO user (email) VALUES ('honux@gmail.com');

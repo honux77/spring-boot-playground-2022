@@ -40,10 +40,31 @@ class SpringBootDemoApplicationTests {
 	}
 
 	@Test
+	void newUserNewGithub() {
+		User user = new User("poogle@notd.com", null);
+		userRepo.save(user);
+		assertThat(user.getId()).isNotNull();
+		logger.debug("new user info: {}", user);
+
+		//set Github
+		user.setGithub(new Github("IamGoogle"));
+		userRepo.save(user);
+
+		user = userRepo.findById(user.getId()).get();
+		assertThat(user.getGithub()).isNotNull();
+		logger.debug("after set Github and Save: {}", user);
+	}
+
+	@Test
 	void userRepo_FindByEmail() {
 		String email = "honux@gmail.com"; //data.sql
 		User user = userRepo.findUserByEmail(email).get();
 		assertThat(user).isNotNull();
+
 		logger.debug("Find user by Email {}: {}", email, user);
+		user.setGithub(new Github("bjack"));
+		userRepo.save(user);
+		user = userRepo.findUserByEmail(email).get();
+		logger.debug("Find user by Email after add github {}: {}", email, user);
 	}
 }
