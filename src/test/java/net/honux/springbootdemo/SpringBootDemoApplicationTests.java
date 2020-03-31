@@ -40,10 +40,33 @@ class SpringBootDemoApplicationTests {
 	}
 
 	@Test
+	void addGame() {
+		User user = userRepo.findById(1L).get();
+		user.addGame(new Game("FF7"));
+		user.addGame(new Game("DQ5"));
+		userRepo.save(user);
+		assertThat(userRepo.countGameforUser(user.getId())).isEqualTo(2);
+		user.getGames().stream().forEach(game -> {
+			logger.debug("After save user and game: {}", game);
+		});
+	}
+
+
+	@Test
 	void userRepo_FindByEmail() {
 		String email = "honux@gmail.com"; //data.sql
 		User user = userRepo.findUserByEmail(email).get();
 		assertThat(user).isNotNull();
 		logger.debug("Find user by Email {}: {}", email, user);
+		user.addGame(new Game("FF7"));
+		user.addGame(new Game("DQ5"));
+		userRepo.save(user);
+
+		user = userRepo.findUserByEmail(email).get();
+		assertThat(userRepo.countGameforUser(user.getId())).isEqualTo(2);
+		user.getGames().stream().forEach(game -> {
+			logger.debug("After save user and game: {}", game);
+		});
+
 	}
 }
