@@ -1,17 +1,22 @@
 package net.honux.springbootdemo;
 
+import org.springframework.data.annotation.Id;
+
 public class Github {
 
-    private String nickname;
+    @Id
+    private Long id;
+    private String githubId;
 
-    public Github(String nickname) {
-        this.nickname = nickname;
+    public Github(String githubId) {
+        this.githubId = githubId;
     }
 
     @Override
     public String toString() {
         return "Github{" +
-                "nickname='" + nickname + '\'' +
+                "id=" + id +
+                ", githubId='" + githubId + '\'' +
                 '}';
     }
 }
