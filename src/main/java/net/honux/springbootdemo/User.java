@@ -1,15 +1,15 @@
 package net.honux.springbootdemo;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Embedded;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 public class User {
 
     @Id
     private Long id;
     private String email;
-
-    @Embedded.Nullable
     private Github github;
 
     public User(String email, Github github) {
