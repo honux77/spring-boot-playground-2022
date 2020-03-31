@@ -7,9 +7,9 @@ import java.util.Optional;
 
 public interface UserRepository extends CrudRepository<User, Long> {
 
-    @Query("Select u.id, u.email, g.id as github_id, g.github_id as github_github_id from"
+    @Query("Select u.id, u.email, g.user as github_user, g.nickname as github_nickname from"
             + " user u left outer join github g on u.id = g.user"
-            + " where email = :email")
+            + " where u.email = :email")
     Optional<User> findUserByEmail(String email);
 
 }
