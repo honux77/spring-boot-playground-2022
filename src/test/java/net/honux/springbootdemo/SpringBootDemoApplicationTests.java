@@ -44,6 +44,12 @@ class SpringBootDemoApplicationTests {
 		user.addGame("DQ5");
 	}
 
+	private void printGames(User user) {
+		user.getGames().stream().forEach(game -> {
+			logger.debug("After save user and game: {}", game);
+		});
+	}
+
 	@Test
 	void addGame() {
 		User user = userRepo.findById(1L).get();
@@ -51,9 +57,7 @@ class SpringBootDemoApplicationTests {
 		userRepo.save(user);
 		assertThat(userRepo.countGameforUser(user.getId())).isEqualTo(2);
 		logger.debug("Add game - user info: {}", user);
-		user.getGames().entrySet().stream().forEach(game -> {
-			logger.debug("After save user and game: {}", game);
-		});
+		printGames(user);
 	}
 
 
@@ -77,10 +81,7 @@ class SpringBootDemoApplicationTests {
 		addUserGame(user);
 		userRepo.save(user);
 		logger.debug("Find user by Email after save and add Game {}: {}", email, user);
-
-		user.getGames().entrySet().stream().forEach(game -> {
-			logger.debug("After save user and game: {}", game);
-		});
+		printGames(user);
 	}
 
 	@AfterEach

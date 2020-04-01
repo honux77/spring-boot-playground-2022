@@ -10,5 +10,5 @@ CREATE TABLE game (
     id int primary key auto_increment,
     title varchar(64),
     user int references user(id),
-    user_key clob
+    user_key int
 );

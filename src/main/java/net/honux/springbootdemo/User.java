@@ -2,8 +2,8 @@ package net.honux.springbootdemo;
 
 import org.springframework.data.annotation.Id;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class User {
 
@@ -11,14 +11,14 @@ public class User {
     private Long id;
     private String email;
 
-    private Map<String, Game> games = new HashMap<>();
+    private List<Game> games = new ArrayList<>();
 
     public User(String email) {
         this.email = email;
     }
 
     public void addGame(String title) {
-        games.put(title, new Game(title));
+        games.add(new Game(title));
     }
 
     public void clearGame() {
@@ -33,7 +33,7 @@ public class User {
         return id;
     }
 
-    public Map<String, Game> getGames() {
+    public List<Game> getGames() {
         return games;
     }
 
