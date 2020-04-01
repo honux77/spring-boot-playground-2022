@@ -12,6 +12,14 @@ public class Game {
         this.title = title;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
     @Override
     public String toString() {
         return "Game{" +
