@@ -46,10 +46,24 @@ public class DatabaseTest {
         logger.debug("After set and save github user {}: {}", github, user);
     }
 
+    @Test
+    void addGame() {
+        User user = userRepo.findById(1L).get();
+        user.addGame("ff7");
+        user.addGame("dq5");
+        userRepo.save(user);
+        assertThat(userRepo.countGame(user.getId())).isEqualTo(2);
+        logger.debug("User after add 2 games: {}", user);
+        for (Game game: user.games()) {
+            logger.debug("Game info: {}", game);
+        }
+    }
+
     @AfterEach
-    void removeGithub() {
+    void cleanup() {
         User user = userRepo.findById(1L).get();
         user.removeGithub();
+        user.clearGame();
         userRepo.save(user);
         logger.debug("After remove github user {}: {}", github, user);
     }

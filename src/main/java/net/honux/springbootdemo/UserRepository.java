@@ -10,4 +10,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
     @Query("Select * from user where email = :email")
     Optional<User> findUserByEmail(String email);
 
+    @Query("SELECT count(*) FROM game WHERE user_id = :uid")
+    int countGame(Long uid);
+
 }
