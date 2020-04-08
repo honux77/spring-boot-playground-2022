@@ -9,4 +9,5 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     @Query("Select * from user where email = :email")
     Optional<User> findUserByEmail(String email);
+
 }
