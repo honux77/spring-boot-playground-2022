@@ -15,7 +15,7 @@ public class WelcomeController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("/{id}")
+    @GetMapping("/hello/{id}")
     public User hello(@PathVariable Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
         return optionalUser.orElseThrow(()->(new ResponseStatusException(HttpStatus.NOT_FOUND, "No user")));
