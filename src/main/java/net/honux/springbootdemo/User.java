@@ -1,5 +1,6 @@
 package net.honux.springbootdemo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Embedded;
 import org.springframework.data.relational.core.mapping.MappedCollection;
@@ -10,7 +11,10 @@ import java.util.Set;
 public class User {
 
     @Id
+    @JsonProperty
     private Long id;
+
+    @JsonProperty
     private String email;
 
     @Embedded.Nullable
