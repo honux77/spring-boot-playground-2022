@@ -1,7 +1,8 @@
 DROP TABLE IF EXISTS game;
-DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS card;
-
+DROP TABLE IF EXISTS read_log;
+DROP TABLE IF EXISTS book;
+DROP TABLE IF EXISTS user;
 
 CREATE TABLE IF NOT EXISTS user (
     id int auto_increment primary key,
@@ -21,5 +22,18 @@ CREATE TABLE IF NOT EXISTS card (
     user_id int references user(id),
     contents varchar(512)
 );
+
+CREATE TABLE IF NOT EXISTS book (
+    id int auto_increment primary key,
+    title varchar(64)
+);
+
+CREATE TABLE IF NOT EXISTS read_log (
+    user int references user(id),
+    book int references book(id),
+    count int,
+    primary key (user, booK)
+);
+
 
 INSERT INTO user (email, created_date) VALUES ('honux@gmail.com', current_time);

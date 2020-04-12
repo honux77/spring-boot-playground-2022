@@ -27,6 +27,8 @@ public class User {
     @MappedCollection(idColumn = "user_id")
     private Set<Game> games = new HashSet<>();
 
+    private Set<ReadLog> readings = new HashSet<>();
+
     public User(String email) {
         this.email = email;
     }
@@ -43,6 +45,16 @@ public class User {
         games.clear();
     }
 
+    public void addReadLog(Book book, int count) {
+        ReadLog r = new ReadLog(book.getId());
+        r.setCount(count);
+        readings.add(r);
+    }
+
+    public void cleanReadLog() {
+        readings.clear();
+    }
+
     public Set<Game> games() {
         return games;
     }
@@ -53,6 +65,10 @@ public class User {
 
     public void removeGithub() {
         this.github = null;
+    }
+
+    public Set<ReadLog> getReadings() {
+        return readings;
     }
 
     public Github github() {
@@ -71,6 +87,7 @@ public class User {
                 ", github=" + github +
                 ", date= " + createdDate +
                 ", gameCount=" + games.size() +
+                ", readingsCount=" + readings.size() +
                 '}';
     }
 }

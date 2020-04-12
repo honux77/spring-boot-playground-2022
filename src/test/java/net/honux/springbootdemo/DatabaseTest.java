@@ -15,8 +15,12 @@ public class DatabaseTest {
 
     @Autowired
     private UserRepository userRepo;
+
     @Autowired
     private CardRepository cardRepo;
+
+    @Autowired
+    private BookRepository bookRepository;
 
     private Logger logger = LoggerFactory.getLogger(SpringBootDemoApplicationTests.class);
 
@@ -84,18 +88,43 @@ public class DatabaseTest {
         logger.info("Card after save: {}", card);
     }
 
+    @Test
+    void add_book() {
+        Book book = new Book("1Q84");
+        bookRepository.save(book);
+        bookRepository.save(new Book("Sapiens"));
+        logger.info("After saving book: {}", book);
+
+        User user = userRepo.findById(1L).get();
+
+        for (Book b: bookRepository.findAll()) {
+            user.addReadLog(b, 2);
+        }
+        userRepo.save(user);
+        logger.info("Add Book: {}", user);
+        assertThat(userRepo.countReading(user.getId())).isEqualTo(4);
+
+        user = userRepo.findById(1L).get();
+        user.getReadings().forEach((b)->{
+            logger.info(b.toString());
+        });
+
+    }
 
     @AfterEach
     void cleanup() {
         User user = userRepo.findById(1L).get();
         user.removeGithub();
         user.clearGame();
+        user.cleanReadLog();
         userRepo.save(user);
-        logger.debug("After remove github user {}: {}", github, user);
+        logger.debug("CLEANUP: {}", user);
+
+        //remove other users
         Optional<User> optionalUser = userRepo.findUserByEmail("honux100@game.com");
         if (optionalUser.isPresent()) {
             userRepo.deleteById(optionalUser.get().getId());
         }
+        bookRepository.deleteAll();
     }
-
 }
