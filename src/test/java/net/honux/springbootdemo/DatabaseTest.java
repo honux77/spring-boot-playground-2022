@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.junit.jupiter.api.*;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
@@ -13,6 +15,13 @@ public class DatabaseTest {
 
     @Autowired
     private UserRepository userRepo;
+
+    @Autowired
+    private CardRepository cardRepo;
+
+    @Autowired
+    private BookRepository bookRepository;
+
     private Logger logger = LoggerFactory.getLogger(SpringBootDemoApplicationTests.class);
 
     private final static String email = "honux@gmail.com"; //data.sql
@@ -59,13 +68,63 @@ public class DatabaseTest {
         }
     }
 
+    @Test
+    void check_created_date_is_not_null() {
+        User user = new User("honux100@game.com");
+        userRepo.save(user);
+        assertThat(user.getCreatedDate()).isNotNull();
+        logger.info("User create and save: {}", user);
+    }
+
+    @Test
+    void add_card_with_user() {
+        Card card = new Card("hello, mesg1");
+        cardRepo.save(card);
+        assertThat(card.getId()).isNotNull();
+        logger.info("Card after save: {}", card);
+        User user = userRepo.findById(1L).get();
+        card.setUser(user);
+        cardRepo.save(card);
+        logger.info("Card after save: {}", card);
+    }
+
+    @Test
+    void add_book() {
+        Book book = new Book("1Q84");
+        bookRepository.save(book);
+        bookRepository.save(new Book("Sapiens"));
+        logger.info("After saving book: {}", book);
+
+        User user = userRepo.findById(1L).get();
+
+        for (Book b: bookRepository.findAll()) {
+            user.addReadLog(b, 2);
+        }
+        userRepo.save(user);
+        logger.info("Add Book: {}", user);
+        assertThat(userRepo.countReading(user.getId())).isEqualTo(4);
+
+        user = userRepo.findById(1L).get();
+        user.getReadings().forEach((b)->{
+            logger.info(b.toString());
+        });
+
+    }
+
     @AfterEach
     void cleanup() {
         User user = userRepo.findById(1L).get();
         user.removeGithub();
         user.clearGame();
+        user.cleanReadLog();
         userRepo.save(user);
-        logger.debug("After remove github user {}: {}", github, user);
-    }
+        logger.debug("CLEANUP: {}", user);
 
+        //remove other users
+        Optional<User> optionalUser = userRepo.findUserByEmail("honux100@game.com");
+        if (optionalUser.isPresent()) {
+            userRepo.deleteById(optionalUser.get().getId());
+        }
+        bookRepository.deleteAll();
+    }
 }

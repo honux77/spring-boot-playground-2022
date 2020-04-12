@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Embedded;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,8 +21,17 @@ public class User {
     @Embedded.Nullable
     private Github github;
 
+    @JsonProperty
+    private LocalDateTime createdDate = LocalDateTime.now();
+
     @MappedCollection(idColumn = "user_id")
     private Set<Game> games = new HashSet<>();
+
+    private Set<ReadLog> readings = new HashSet<>();
+
+    public User(String email) {
+        this.email = email;
+    }
 
     public void addGithub(String githubId) {
         github = new Github(githubId);
@@ -33,6 +43,16 @@ public class User {
 
     public void clearGame() {
         games.clear();
+    }
+
+    public void addReadLog(Book book, int count) {
+        ReadLog r = new ReadLog(book.getId());
+        r.setCount(count);
+        readings.add(r);
+    }
+
+    public void cleanReadLog() {
+        readings.clear();
     }
 
     public Set<Game> games() {
@@ -47,8 +67,16 @@ public class User {
         this.github = null;
     }
 
+    public Set<ReadLog> getReadings() {
+        return readings;
+    }
+
     public Github github() {
         return github;
+    }
+
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
     }
 
     @Override
@@ -57,7 +85,9 @@ public class User {
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", github=" + github +
+                ", date= " + createdDate +
                 ", gameCount=" + games.size() +
+                ", readingsCount=" + readings.size() +
                 '}';
     }
 }
