@@ -15,6 +15,9 @@ public class DatabaseTest {
 
     @Autowired
     private UserRepository userRepo;
+    @Autowired
+    private CardRepository cardRepo;
+
     private Logger logger = LoggerFactory.getLogger(SpringBootDemoApplicationTests.class);
 
     private final static String email = "honux@gmail.com"; //data.sql
@@ -68,6 +71,19 @@ public class DatabaseTest {
         assertThat(user.getCreatedDate()).isNotNull();
         logger.info("User create and save: {}", user);
     }
+
+    @Test
+    void add_card_with_user() {
+        Card card = new Card("hello, mesg1");
+        cardRepo.save(card);
+        assertThat(card.getId()).isNotNull();
+        logger.info("Card after save: {}", card);
+        User user = userRepo.findById(1L).get();
+        card.setUser(user);
+        cardRepo.save(card);
+        logger.info("Card after save: {}", card);
+    }
+
 
     @AfterEach
     void cleanup() {
