@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.junit.jupiter.api.*;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
@@ -59,6 +61,14 @@ public class DatabaseTest {
         }
     }
 
+    @Test
+    void check_created_date_is_not_null() {
+        User user = new User("honux100@game.com");
+        userRepo.save(user);
+        assertThat(user.getCreatedDate()).isNotNull();
+        logger.info("User create and save: {}", user);
+    }
+
     @AfterEach
     void cleanup() {
         User user = userRepo.findById(1L).get();
@@ -66,6 +76,10 @@ public class DatabaseTest {
         user.clearGame();
         userRepo.save(user);
         logger.debug("After remove github user {}: {}", github, user);
+        Optional<User> optionalUser = userRepo.findUserByEmail("honux100@game.com");
+        if (optionalUser.isPresent()) {
+            userRepo.deleteById(optionalUser.get().getId());
+        }
     }
 
 }

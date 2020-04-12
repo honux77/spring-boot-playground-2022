@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Embedded;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,8 +21,15 @@ public class User {
     @Embedded.Nullable
     private Github github;
 
+    @JsonProperty
+    private LocalDateTime createdDate = LocalDateTime.now();
+
     @MappedCollection(idColumn = "user_id")
     private Set<Game> games = new HashSet<>();
+
+    public User(String email) {
+        this.email = email;
+    }
 
     public void addGithub(String githubId) {
         github = new Github(githubId);
@@ -51,12 +59,17 @@ public class User {
         return github;
     }
 
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", github=" + github +
+                ", date= " + createdDate +
                 ", gameCount=" + games.size() +
                 '}';
     }

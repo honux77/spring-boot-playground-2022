@@ -12,5 +12,4 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     @Query("SELECT count(*) FROM game WHERE user_id = :uid")
     int countGame(Long uid);
-
 }
