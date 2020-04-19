@@ -18,11 +18,8 @@ public class UserDaoTest {
 
     @Test
     void userDao_findById() {
-        User user = userDao.findbyId(1L);
+        User user = userDao.findById(1L);
         assertThat(user).isNotNull();
         logger.info("Find user by userDao: {}", user);
-
-        user = userDao.findbyId(999L);
-        assertThat(user).isNull();
     }
 }
