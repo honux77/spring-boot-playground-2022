@@ -17,7 +17,12 @@ public class UserDaoTest {
     private UserDao userDao;
 
     @Test
-    void connection_ok() {
-        assertThat(userDao.getConntection()).isNotNull();
+    void userDao_findById() {
+        User user = userDao.findbyId(1L);
+        assertThat(user).isNotNull();
+        logger.info("Find user by userDao: {}", user);
+
+        user = userDao.findbyId(999L);
+        assertThat(user).isNull();
     }
 }

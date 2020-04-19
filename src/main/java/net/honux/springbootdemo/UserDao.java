@@ -6,14 +6,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 
 @Repository
 public class UserDao {
     private Logger logger = LoggerFactory.getLogger(UserDao.class);
-    /*spring.datasource.url=jdbc:mysql://localhost:3306/bootdb
-spring.datasource.username=scott
-spring.datasource.password=tiger57 */
-
 
     @Value("${spring.datasource.url}")
     private String url;
@@ -24,7 +21,7 @@ spring.datasource.password=tiger57 */
     @Value("${spring.datasource.password}")
     private String password;
 
-    public Connection getConntection() {
+    private Connection getConntection() {
         Connection conn = null;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -45,10 +42,23 @@ spring.datasource.password=tiger57 */
     }
 
     public User findbyId(Long id) {
+
+        String sql = "SELECT * FROM user where id=?";
         User user = new User();
+
         try (Connection conn = getConntection()) {
-            Statement stmt = conn.createStatement();
-            stmt.close();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setLong(1, id);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (!rs.next()) return null;
+
+            user.setId(rs.getLong("id"));
+            user.setEmail(rs.getString("email"));
+            user.addGithub(rs.getString("github_id"));
+            user.setCreateDateFromString(rs.getString("created_date"));
+            pstmt.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

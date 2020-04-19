@@ -6,6 +6,7 @@ import org.springframework.data.relational.core.mapping.Embedded;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -61,6 +62,14 @@ public class User {
         return games;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public Long getId() {
         return id;
     }
@@ -77,9 +86,19 @@ public class User {
         return github;
     }
 
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public void setCreateDateFromString(String dateTimeStr) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        setCreatedDate(LocalDateTime.parse(dateTimeStr, formatter));
+    }
+
     public LocalDateTime getCreatedDate() {
         return createdDate;
     }
+
 
     @Override
     public String toString() {
