@@ -24,9 +24,27 @@ public class UserDaoTest {
     }
 
     @Test
+    void userDao_insert() {
+        User user = new User("honux2@google.com");
+        user.addGithub("honux2");
+        user = userDao.insert(user);
+        int n = userDao.countAllUsers();
+        assertThat(n > 1).isTrue();
+        assertThat(user.getId()).isNotNull();
+
+        logger.info("User count: {}", n);
+        logger.info("Usr after save: {}", user);
+    }
+
+    @Test
     void userData_count_is_not_zero() {
         int n = userDao.countAllUsers();
         assertThat(n).isNotEqualTo(0);
         logger.info("User count: {}", n);
+    }
+
+    @AfterEach
+    void cleanup() {
+        userDao.deleteOther(1L);
     }
 }

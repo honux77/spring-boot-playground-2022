@@ -25,6 +25,9 @@ public class User {
     @JsonProperty
     private LocalDateTime createdDate = LocalDateTime.now();
 
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+
     @MappedCollection(idColumn = "user_id")
     private Set<Game> games = new HashSet<>();
 
@@ -74,6 +77,10 @@ public class User {
         return id;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
     public void removeGithub() {
         this.github = null;
     }
@@ -91,12 +98,15 @@ public class User {
     }
 
     public void setCreateDateFromString(String dateTimeStr) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         setCreatedDate(LocalDateTime.parse(dateTimeStr, formatter));
     }
 
     public LocalDateTime getCreatedDate() {
         return createdDate;
+    }
+
+    public String getFormattedCreatedDate() {
+        return createdDate.format(formatter);
     }
 
 
