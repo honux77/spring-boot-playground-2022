@@ -29,6 +29,8 @@ public class User {
 
     private Set<ReadLog> readings = new HashSet<>();
 
+    public User() {};
+
     public User(String email) {
         this.email = email;
     }
