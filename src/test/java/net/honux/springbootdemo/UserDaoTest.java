@@ -22,4 +22,11 @@ public class UserDaoTest {
         assertThat(user).isNotNull();
         logger.info("Find user by userDao: {}", user);
     }
+
+    @Test
+    void userData_count_is_not_zero() {
+        int n = userDao.countAllUsers();
+        assertThat(n).isNotEqualTo(0);
+        logger.info("User count: {}", n);
+    }
 }
