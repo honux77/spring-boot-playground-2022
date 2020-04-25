@@ -2,6 +2,12 @@ plugins {
 	id 'org.springframework.boot' version '2.2.6.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 	id 'java'
+	id 'war'
+}
+
+bootWar{
+	archiveBaseName="spring-boot-demo"
+	archiveVersion="0.0.2-SNAPSHOT"
 }
 
 group = 'net.honux'
@@ -19,8 +25,11 @@ dependencies {
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
+	//exclude tomcat
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 }
 
 test {
 	useJUnitPlatform()
 }
+
