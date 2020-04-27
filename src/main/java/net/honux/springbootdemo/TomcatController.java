@@ -11,9 +11,7 @@ import java.util.stream.IntStream;
 public class TomcatController {
 
     @GetMapping("/hello")
-    public Collection<String> sayHello() {
-        return IntStream.range(0, 10)
-                .mapToObj(i -> "Hello number " + i)
-                .collect(Collectors.toList());
+    public String sayHello() {
+		return "Hello v.0.2";
     }
 }
