@@ -12,6 +12,6 @@ public class TomcatController {
 
     @GetMapping("/hello")
     public String sayHello() {
-		return "Hello v.0.2";
+		return "Hello v.0.3";
     }
 }
