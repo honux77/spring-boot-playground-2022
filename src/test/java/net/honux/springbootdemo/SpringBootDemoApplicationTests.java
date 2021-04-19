@@ -15,17 +15,22 @@ class SpringBootDemoApplicationTests {
 	@Autowired
 	private ApplicationContext ctx;
 	private Logger logger = LoggerFactory.getLogger(SpringBootDemoApplicationTests.class);
+	@Autowired
+	private UserRepository userRepository;
 
 	@Test
+	@DisplayName("IoC컨테이너 정상 동작 확")
 	void contextLoads() {
+		assertThat(logger).isNotNull();
 		assertThat(ctx).isNotNull();
-		logger.debug("ApplicationContext is not null");
 	}
 
 	@Test
-	void LoggerNotNull() {
-		assertThat(logger).isNotNull();
-		logger.debug("Logger OK");
+	@DisplayName("Spring Data JDBC MySQL 연동 확인")
+	void readUser() {
+		User user = userRepository.findById(1L).get();
+		assertThat(user).isNotNull();
+		logger.info("User ID 1: ", user);
 	}
 
 
