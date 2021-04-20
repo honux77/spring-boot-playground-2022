@@ -14,3 +14,17 @@ INSERT INTO user(email, name, nickname, photo_url)
            ('kyu@newzealand.com', 'qqq', null, null);
 
 select * from user;
+
+DROP TABLE IF EXISTS food;
+
+CREATE TABLE food (
+    name varchar(64),
+    cal int,
+    user int references user(id)
+);
+
+insert into food values('flower crab', 0, 1),
+                        ('Sool', 2000, 2),
+                        ('Kangaroo', 600, 3);
+
+select * from food;
