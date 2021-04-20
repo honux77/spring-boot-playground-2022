@@ -36,12 +36,24 @@ class SpringBootDemoApplicationTests {
 		User user = userRepository.findById(id).get();
 		assertThat(user).isNotNull();
 		logger.info("User ID {}: {}", id, user);
+		Github gh = user.getGithub();
+		assertThat(gh).isNotNull();
 
-		Long id2 = 3L;
+
+		Long id3 = 3L;
+		user = userRepository.findById(id3).get();
+		assertThat(user).isNotNull();
+		gh = user.getGithub();
+		assertThat(gh).isNull();
+		logger.info("User ID {}: {}", id3, user);
+
+		Long id2 = 9999L;
 		assertThat(userRepository.findById(id2).isPresent()).isFalse();
 
 		Iterable<User> users = userRepository.findAll();
-		assertThat(((Collection) users).size()).isEqualTo(2);
+		assertThat(((Collection) users).size()).isEqualTo(3);
+
+		assertThat(userRepository.count()).isEqualTo(3);
 	}
 
 	@Test
@@ -64,6 +76,7 @@ class SpringBootDemoApplicationTests {
 	@DisplayName("새로운 유저 생성이 되는지 확인")
 	void create() {
 		User user = new User("test@zz.com", "hello");
+		user.setGithub(new Github("zzz", "https://qqqqqq/why_laugh"));
 		user = userRepository.save(user);
 		assertThat(user.getId()).isGreaterThanOrEqualTo(2);
 		logger.info("Create new user {}", user);
@@ -74,6 +87,7 @@ class SpringBootDemoApplicationTests {
 	void update() {
 		String name = "Jane";
 		User user = new User("j@jj.com", "John");
+		user.setGithub(new Github("qqqqq", "http://qqqqqq"));
 		user = userRepository.save(user);
 		user.setName(name);
 		user = userRepository.save(user);

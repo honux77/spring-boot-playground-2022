@@ -8,6 +8,7 @@ public class User {
     private Long id;
     private String email;
     private String name;
+    private Github github;
 
     public User(String email, String name) {
         this.email = email;
@@ -28,11 +29,21 @@ public class User {
         this.name = name;
     }
 
+    public Github getGithub() {
+        return github;
+    }
+
+    public void setGithub(Github github) {
+        this.github = github;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ", github=" + github +
                 '}';
     }
 }
