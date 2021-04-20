@@ -3,24 +3,14 @@ DROP TABLE IF EXISTS user;
 CREATE TABLE user (
     id int auto_increment primary key,
     email varchar(64) unique not null,
-    name varchar(64)
-);
-
-DROP TABLE IF EXISTS github;
-
-CREATE TABLE github (
+    name varchar(64),
     nickname varchar(64),
-    photo_url varchar(255),
-    `user` int references user(id)
+    photo_url varchar(255)
 );
 
+INSERT INTO user(email, name, nickname, photo_url)
+    values ('honux@a.com', 'honux', 'hodor', 'aaa'),
+           ('crong@b.io', 'crong', 'pororo', 'bbb'),
+           ('kyu@newzealand.com', 'qqq', null, null);
 
-INSERT INTO user(email, name)
-    values ('honux@a.com', 'honux'), ('crong@b.io', 'crong'),
-           ('kyu@newzealand.com', 'qqq');
-
-INSERT INTO github(nickname, photo_url, user)
-    values('hodor', 'https://a.com/ppp', 1),
-        ('pororo', 'https://a.com/pororo', 2);
-
-select * from github;
+select * from user;

@@ -39,7 +39,6 @@ class SpringBootDemoApplicationTests {
 		Github gh = user.getGithub();
 		assertThat(gh).isNotNull();
 
-
 		Long id3 = 3L;
 		user = userRepository.findById(id3).get();
 		assertThat(user).isNotNull();
@@ -101,9 +100,12 @@ class SpringBootDemoApplicationTests {
 	void delete() {
 		Long id1 = 1L;
 		Long id2 = 2L;
+		Long id3 = 3L;
+
 		User user = userRepository.findById(id1).get();
 		userRepository.delete(user);
 		userRepository.deleteById(id2);
+		userRepository.deleteById(id3);
 		assertThat(userRepository.count()).isEqualTo(0);
 	}
 }
