@@ -42,6 +42,10 @@ class SpringBootDemoApplicationTests {
 		assertThat(gh).isNotNull();
 		assertThat(foods.size()).isPositive();
 
+		logger.info("AdultSak {}", user.getFoods().size());
+		user.addFoods(new Food("ddukboki", -50));
+		userRepository.save(user);
+
 		Long id3 = 3L;
 		user = userRepository.findById(id3).get();
 		assertThat(user).isNotNull();

@@ -15,8 +15,8 @@ public class User {
     @Embedded.Nullable
     private Github github;
 
-    @MappedCollection(keyColumn="name")
-    private Map<String, Food> foods = new HashMap<>();
+    @MappedCollection(keyColumn = "order_in_user")
+    private List<Food> foods = new ArrayList<>();
 
     public User(String email, String name) {
         this.email = email;
@@ -25,16 +25,12 @@ public class User {
 
     public void addFoods(Food... foods) {
         for(Food f: foods) {
-            this.foods.put(f.name, f);
+            this.foods.add(f);
         }
     }
 
     public Collection<Food> getFoods() {
-        return foods.values();
-    }
-
-    public Food getFood(String name) {
-        return foods.get(name);
+        return foods;
     }
 
     public Long getId() {
