@@ -38,7 +38,7 @@ class SpringBootDemoApplicationTests {
 		assertThat(user).isNotNull();
 		logger.info("User ID {}: {}", id, user);
 		Github gh = user.getGithub();
-		Set<Food> foods = user.getFoods();
+		Collection<Food> foods = user.getFoods();
 		assertThat(gh).isNotNull();
 		assertThat(foods.size()).isPositive();
 
@@ -119,7 +119,7 @@ class SpringBootDemoApplicationTests {
 		user.addFoods(new Food("QueenCrab", 100),
 				new Food("IceNoodle", 200));
 		userRepository.save(user);
-		Set<Food> foods = userRepository.findById(1L).get().getFoods();
+		Collection<Food> foods = userRepository.findById(1L).get().getFoods();
 		assertThat(foods.size()).isGreaterThanOrEqualTo(2);
 		for (Food f:foods) {
 			System.out.println(f);

@@ -2,9 +2,9 @@ package net.honux.springbootdemo;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Embedded;
+import org.springframework.data.relational.core.mapping.MappedCollection;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class User {
 
@@ -15,7 +15,8 @@ public class User {
     @Embedded.Nullable
     private Github github;
 
-    private Set<Food> foods = new HashSet<>();
+    @MappedCollection(keyColumn="name")
+    private Map<String, Food> foods = new HashMap<>();
 
     public User(String email, String name) {
         this.email = email;
@@ -24,12 +25,16 @@ public class User {
 
     public void addFoods(Food... foods) {
         for(Food f: foods) {
-            this.foods.add(f);
+            this.foods.put(f.name, f);
         }
     }
 
-    public Set<Food> getFoods() {
-        return foods;
+    public Collection<Food> getFoods() {
+        return foods.values();
+    }
+
+    public Food getFood(String name) {
+        return foods.get(name);
     }
 
     public Long getId() {
