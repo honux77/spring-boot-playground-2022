@@ -14,6 +14,7 @@ public class User {
     private String name;
     @Embedded.Nullable
     private Github github;
+    private Long groupId;
 
     @MappedCollection(keyColumn = "order_in_user")
     private List<Food> foods = new ArrayList<>();
@@ -63,5 +64,9 @@ public class User {
                 ", name='" + name + '\'' +
                 ", github=" + github +
                 '}';
+    }
+
+    public Long getGroupId() {
+        return groupId;
     }
 }
