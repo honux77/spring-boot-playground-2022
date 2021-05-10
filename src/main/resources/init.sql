@@ -34,3 +34,22 @@ insert into food values('flower crab', 0, 1, 0),
                         ('Sool', 2000, 2, 0),
                         ('Kangaroo', 600, 3, 0);
 select * from food;
+
+drop table if exists project;
+create table project (
+    id int primary key auto_increment,
+    name varchar(64)
+);
+insert into project(name) values ('sidedish'),('todo'),('super mario');
+select * from project;
+
+drop table if exists works_on;
+create table works_on (
+    id int primary key auto_increment,
+    project_id int references project(id),
+    user int references user(id),
+    hour int
+);
+
+insert into works_on(project_id, user, hour) values (1, 1, 1), (2, 1, 1), (2, 2, 2);
+select * from works_on;

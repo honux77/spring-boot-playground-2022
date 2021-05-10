@@ -16,6 +16,8 @@ public class User {
     private Github github;
     private Long groupId;
 
+    private Set<WorksOn> worksOns;
+
     @MappedCollection(keyColumn = "order_in_user")
     private List<Food> foods = new ArrayList<>();
 
@@ -68,5 +70,9 @@ public class User {
 
     public Long getGroupId() {
         return groupId;
+    }
+
+    public Set<WorksOn> getWorksOn() {
+        return worksOns;
     }
 }
