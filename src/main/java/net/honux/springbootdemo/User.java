@@ -16,6 +16,10 @@ public class User {
 
     private Github github;
 
+    public User() {
+        super();
+    }
+
     public User(String email, Github github) {
         this.email = email;
         this.github = github;
@@ -37,18 +41,16 @@ public class User {
         return github;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", createdDate=" + createdDate +
-                ", github=" + github +
-                '}';
-    }
-
     public void setGithub(Github github) {
         this.github = github;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void addGame(Game game) {
@@ -61,5 +63,15 @@ public class User {
 
     public List<Game> getGames() {
         return this.games;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", createdDate=" + createdDate +
+                ", github=" + github +
+                '}';
     }
 }
