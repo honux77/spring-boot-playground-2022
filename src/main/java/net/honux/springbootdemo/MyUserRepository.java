@@ -1,19 +1,17 @@
 package net.honux.springbootdemo;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
+import javax.sql.DataSource;
 import java.sql.*;
 
 @Repository
 public class MyUserRepository {
 
-    @Value("${spring.datasource.url}")
-    private String url;
-    @Value("${spring.datasource.username}")
-    private String username;
-    @Value("${spring.datasource.password}")
-    private String password;
+    @Autowired
+    private DataSource dataSource;
 
     public Connection getConnection() {
         try {
@@ -25,7 +23,7 @@ public class MyUserRepository {
 
         Connection conn = null;
         try {
-            conn = DriverManager.getConnection(url, username, password);
+            conn = dataSource.getConnection();
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
