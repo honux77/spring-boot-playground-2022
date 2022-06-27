@@ -14,10 +14,6 @@ class SpringBootDemoApplicationTests {
 
 	@Autowired
 	private ApplicationContext ctx;
-
-	@Autowired
-	private UserRepository userRepo;
-
 	private Logger logger = LoggerFactory.getLogger(SpringBootDemoApplicationTests.class);
 
 	@Test
